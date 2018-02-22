@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		final String appName = "Kalkulator 0.1";
+		final String appName = "Kalkulator 0.4";
 		Parent root = FXMLLoader.load(getClass().getResource("fxml/MainPane.fxml"));
 		primaryStage.setResizable(false);
 		primaryStage.setScene(new Scene(root));

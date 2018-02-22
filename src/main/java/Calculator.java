@@ -14,9 +14,11 @@ public class Calculator {
 			return tmp.toString();
 		case "÷":
 			if (number2 == 0)
-				return "Nie podzielisz przez zero.";
+			    return "Nie podzielisz przez zero.";
 			tmp = number1 / number2;
 			return tmp.toString();
+		case "=":
+			return "";
 		default:
 			return "Nieznany operator.";
 		}

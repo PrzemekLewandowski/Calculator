@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class MainPaneController {
-	private boolean start = true;
 	private String operator = "";
 	private Double number1;
 	private Calculator calculate = new Calculator();
@@ -21,38 +20,53 @@ public class MainPaneController {
 	@FXML
 	private void processOperator(ActionEvent event) {
 		String value = ((Button) event.getSource()).getText();
+		if (labelDown.getText().isEmpty() || labelDown.getText().equals("-")) {
+			if (value.equals("-"))
+				labelDown.setText("-");
+			return;
+		}
 		if (!value.equals("=")) {
 			if (!operator.isEmpty())
 				return;
+			if(!isNumeric(labelDown.getText())) {
+				labelDown.setText("");
+				return;
+			}
 			operator = value;
 			number1 = Double.parseDouble(labelDown.getText());
+			String number1AsString = String.valueOf(number1);
+			if (checkIfEndsWithPointZero(number1AsString))
+				number1AsString = number1AsString.substring(0, number1AsString.length() - 2);
 			labelDown.setText("");
-			labelUp.setText(number1 + operator);
+			labelUp.setText(number1AsString + " " + operator + " ");
 		} else {
 			if (operator.isEmpty())
 				return;
-			if (number1 != null) {
-				labelDown.setText(calculate.calculate(number1, Double.parseDouble(labelDown.getText()), operator));
-				labelUp.setText("");
-			}
+			String result = calculate.calculate(number1, Double.parseDouble(labelDown.getText()), operator);
+			if (checkIfEndsWithPointZero(result))
+				result = result.substring(0, result.length() - 2);
+			labelDown.setText(result);
+			labelUp.setText("");
 			operator = "";
-			start = true;
 		}
+	}
+	
+	private boolean isNumeric(String str){
+		  return str.matches("-?\\d+(\\.\\d+)?");
+	}
+
+	private boolean checkIfEndsWithPointZero(String str) {
+		return str.endsWith(".0");
 	}
 
 	@FXML
 	private void processNumpad(ActionEvent event) {
-		if (start) {
-			labelDown.setText("");
-			start = false;
-		}
-
 		String value = ((Button) event.getSource()).getText();
 		if (checkIfPointFirst(value))
 			return;
 		else if (checkIfAlreadyDouble(value))
 			return;
-		else if (checkIfZeroFirst(value))
+		else if (checkIfAlreadyZero(value))
 			if (value.equals("."))
 				labelDown.setText(labelDown.getText() + value);
 			else
@@ -81,25 +95,17 @@ public class MainPaneController {
 			return "";
 	}
 
-	private boolean checkIfZeroFirst(String value) {
-		if (labelDown.getText().equals("0"))
-			return true;
-		else
-			return false;
+	private boolean checkIfAlreadyZero(String value) {
+		return labelDown.getText().equals("0");
 	}
 
 	private boolean checkIfAlreadyDouble(String value) {
-		if (value.equals(".") && labelDown.getText().contains("."))
-			return true;
-		else
-			return false;
+		return value.equals(".") && labelDown.getText().contains(".");
 	}
 
 	private boolean checkIfPointFirst(String value) {
-		if (labelDown.getText().isEmpty() && value.equals("."))
-			return true;
-		else
-			return false;
+		return ((labelDown.getText().isEmpty() && value.equals("."))
+				|| labelDown.getText().equals("-") && value.equals("."));
 	}
 
 }
