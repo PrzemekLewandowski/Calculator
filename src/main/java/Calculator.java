@@ -1,21 +1,24 @@
 
 public class Calculator {
-	public Float addition(Float x, Float y) {
-		return x + y;
-	}
-
-	public Float substraction(Float x, Float y) {
-		return x - y;
-	}
-
-	public Float multiplication(Float x, Float y) {
-		return x * y;
-	}
-
-	public Float division(Float x, Float y) {
-		if (y == 0)
-			throw new ArithmeticException("Nie mo¿na dzieliæ przez 0.");
-		else
-			return x / y;
+	public String calculate(Double number1, Double number2, String operator) {
+		Double tmp;
+		switch (operator) {
+		case "+":
+			tmp = number1 + number2;
+			return tmp.toString();
+		case "-":
+			tmp = number1 - number2;
+			return tmp.toString();
+		case "*":
+			tmp = number1 * number2;
+			return tmp.toString();
+		case "÷":
+			if (number2 == 0)
+				return "Nie podzielisz przez zero.";
+			tmp = number1 / number2;
+			return tmp.toString();
+		default:
+			return "Nieznany operator.";
+		}
 	}
 }

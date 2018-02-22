@@ -3,20 +3,17 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) throws IOException {
+	public void start(Stage primaryStage) throws Exception {
 		final String appName = "Kalkulator 0.1";
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(this.getClass().getResource("fxml/MainPane.fxml"));
-		AnchorPane anchorPane = loader.load();
-		Scene scene = new Scene(anchorPane);
+		Parent root = FXMLLoader.load(getClass().getResource("fxml/MainPane.fxml"));
 		primaryStage.setResizable(false);
-		primaryStage.setScene(scene);
+		primaryStage.setScene(new Scene(root));
 		primaryStage.setTitle(appName);
 		primaryStage.show();
 	}
