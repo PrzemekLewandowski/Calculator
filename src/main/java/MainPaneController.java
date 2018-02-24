@@ -51,11 +51,11 @@ public class MainPaneController {
 		}
 	}
 	
-	private boolean isNumeric(String str){
+	public boolean isNumeric(String str){
 		  return str.matches("-?\\d+(\\.\\d+)?");
 	}
 
-	private boolean checkIfEndsWithPointZero(String str) {
+	public boolean checkIfEndsWithPointZero(String str) {
 		return str.endsWith(".0");
 	}
 
@@ -88,22 +88,22 @@ public class MainPaneController {
 		}
 	}
 
-	private String cutString(String str) {
+	public String cutString(String str) {
 		if (str != null && str.length() > 1)
 			return str.substring(0, str.length() - 1);
 		else
 			return "";
 	}
 
-	private boolean checkIfAlreadyZero(String value) {
+	public boolean checkIfAlreadyZero(String value) {
 		return labelDown.getText().equals("0");
 	}
 
-	private boolean checkIfAlreadyDouble(String value) {
+	public boolean checkIfAlreadyDouble(String value) {
 		return value.equals(".") && labelDown.getText().contains(".");
 	}
 
-	private boolean checkIfPointFirst(String value) {
+	public boolean checkIfPointFirst(String value) {
 		return ((labelDown.getText().isEmpty() && value.equals("."))
 				|| labelDown.getText().equals("-") && value.equals("."));
 	}
